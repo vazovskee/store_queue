@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 
 contract StoreQueue {
 
-    string[] public queue;
+    string[] private queue;
     uint private firstPosition;
 
     constructor() public {
@@ -23,9 +23,13 @@ contract StoreQueue {
         queue.push(name);
 	}
 
-    function excludeFirstPesron() public checkOwnerAndAccept {
+    function getPersonOut() public checkOwnerAndAccept returns (string) {
         require(firstPosition < queue.length, 201, "queue is empty");
+        
+        string leavingPerson = queue[firstPosition];
         delete queue[firstPosition];
         firstPosition++;
+        
+        return leavingPerson;
 	}
 }
