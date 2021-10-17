@@ -14,24 +14,24 @@ contract StoreQueue {
     }
 
     modifier checkOwnerAndAccept {
-		require(msg.pubkey() == tvm.pubkey(), 102);
-		tvm.accept();
-		_;
-	}
+        require(msg.pubkey() == tvm.pubkey(), 102);
+        tvm.accept();
+        _;
+    }
 
     // функция для добавления имени человека в конец массива
-	function addPerson(string name) public checkOwnerAndAccept {
+    function addPerson(string name) public checkOwnerAndAccept {
         queue.push(name);
-	}
+    }
 
     // функция, которая удаляет имя первого человека из очереди и возвращает его значение
     function getPersonOut() public checkOwnerAndAccept returns (string) {
         require(firstPosition < queue.length, 201, "queue is empty"); // проверка на выход за границы массива
-        
+
         string leavingPerson = queue[firstPosition];
         delete queue[firstPosition];
         firstPosition++;
-        
+
         return leavingPerson;
-	}
+    }
 }
